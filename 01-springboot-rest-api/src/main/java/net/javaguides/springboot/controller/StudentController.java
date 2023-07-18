@@ -32,9 +32,9 @@ public class StudentController {
 
     // Spring Boot REST API with Path Variable
     // {id} - URI template variable
-    // http//localhost:8080/students/1
-    @GetMapping("students/{id}")
-    public Student studentPathVariable(@PathVariable("id") int studentId) {
-        return new Student(studentId, "Ramesh", "Fadatare");
+    // http//localhost:8080/students/1/Ramesh/Fadatare
+    @GetMapping("students/{id}/{first-name}/{last-name}")
+    public Student studentPathVariable(@PathVariable("id") int studentId, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
+        return new Student(studentId, firstName, lastName);
     }
 }
