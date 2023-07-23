@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
     // ResponseEntity represents the whole HTTP response: status code, headers and body.
     // It is a generic type, can use any type as the response body
@@ -25,7 +26,7 @@ public class StudentController {
                 .body(student);
     }
 
-    @GetMapping("students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(new Student(1, "Ramesh", "Fadatare"));
@@ -38,7 +39,7 @@ public class StudentController {
     // Spring Boot REST API with Path Variable
     // {id} - URI template variable
     // http://localhost:8080/students/1/Ramesh/Fadatare
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int studentId, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
         Student student = new Student(studentId, firstName, lastName);
         return ResponseEntity.ok(student);
@@ -46,7 +47,7 @@ public class StudentController {
 
     // Spring Boot REST API with Request Param
     // http://localhost:8080/students/query?id=1&firstName=Ramesh&lastName=Fadatare
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id, @RequestParam String firstName, @RequestParam String lastName) {
         Student student = new Student(id, firstName, lastName);
         return ResponseEntity.ok(student);
@@ -56,7 +57,7 @@ public class StudentController {
     // @PostRequest and @ResponseBody
     // @RequestBody converts the JSON from request into a Java object
     // Spring Boot uses HTTP status 200 as a default
-    @PostMapping("students/create")
+    @PostMapping("create")
     // ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         // instead of saving, will print out in console
@@ -67,7 +68,7 @@ public class StudentController {
     }
 
     // Spring Boot REST API that handles HTTP PUT Request - updating existing resources
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
@@ -75,7 +76,7 @@ public class StudentController {
     }
 
     // Spring Boot REST API that handles HTTP DELETE Request - deleting the existing resources
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId) {
         System.out.println(studentId);
         return ResponseEntity.ok("Student deleted successfully!");
